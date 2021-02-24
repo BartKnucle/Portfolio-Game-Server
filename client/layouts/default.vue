@@ -103,13 +103,13 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          title: 'Users',
+          to: '/users'
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Players',
-          to: '/players'
+          title: 'Logger',
+          to: '/logger'
         }
       ],
       miniVariant: false,

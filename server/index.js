@@ -10,6 +10,7 @@ const configuration = require('@feathersjs/configuration')
 const middleware = require('./middleware')
 const services = require('./services')
 const channels = require('./channels')
+const gameNetwork = require('./game.network')
 const certif = require('./certif')
 
 process.env.NODE_CONFIG_DIR = path.join(__dirname, 'config/')
@@ -28,10 +29,11 @@ exports.start = function start () {
   app.configure(configuration())
   const env = process.env.NODE_ENV || 'production'
   app.set('env', env)
-  app.set('homePath', path.join(require('os').homedir(), '.ocs-server', app.get('env')))
+  app.set('homePath', path.join(require('os').homedir(), '.protfolio-game-server', app.get('env')))
 
   app.configure(services)
   app.configure(channels)
+  app.configure(gameNetwork)
   app.hooks(require('./app.hooks'))
   app.configure(middleware)
   app.configure(certif)

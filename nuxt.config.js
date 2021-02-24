@@ -2,6 +2,8 @@ const colors = require('vuetify/es5/util/colors').default
 
 module.exports = {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
+  rootDir: './client',
+  telemetry: false,
   ssr: false,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -65,5 +67,11 @@ module.exports = {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    /*
+    ** You can extend webpack config here
+    */
+    transpile: ['feathers-vuex'],
+    extend (config, ctx) {
+    }
   }
 }
