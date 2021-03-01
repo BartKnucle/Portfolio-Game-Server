@@ -1,10 +1,3 @@
-const getConsole = (options = {}) => {
-  return (context) => {
-    //  console.log(context.data)
-    return context
-  }
-}
-
 module.exports = {
   before: {
     all: [],
@@ -13,7 +6,7 @@ module.exports = {
     create: [],
     update: [],
     patch: [],
-    remove: [getConsole()]
+    remove: []
   },
 
   after: {
@@ -23,7 +16,7 @@ module.exports = {
     create: [],
     update: [],
     patch: [],
-    remove: [getConsole()]
+    remove: []
   },
 
   error: {

@@ -21,7 +21,11 @@
         "run",
         "dev-debug"
       ],
-      "port": 5858
+      "port": 5858,
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ]
     }
   ],
   "compounds": [

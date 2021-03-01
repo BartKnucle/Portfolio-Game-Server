@@ -12,6 +12,7 @@ const services = require('./services')
 const channels = require('./channels')
 const gameNetwork = require('./game.network')
 const certif = require('./certif')
+const http = require('./http')
 
 process.env.NODE_CONFIG_DIR = path.join(__dirname, 'config/')
 
@@ -37,6 +38,7 @@ exports.start = function start () {
   app.hooks(require('./app.hooks'))
   app.configure(middleware)
   app.configure(certif)
+  app.configure(http)
 
   const host = app.get('host')
   const port = app.get('port')

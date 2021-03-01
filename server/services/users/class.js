@@ -13,6 +13,9 @@ exports.Users = class Users extends ServiceClass {
       userId,
       { online: true }
     )
+      .catch((err) => {
+        this.app.log(err)
+      })
   }
 
   setOffline (userId) {
@@ -20,30 +23,19 @@ exports.Users = class Users extends ServiceClass {
       userId,
       { online: false }
     )
+      .catch((err) => {
+        this.app.log(err)
+      })
   }
 
   //  On user connection
   onConnect (authResult) {
-    switch (authResult.user.type) {
-      case 'device':
-        this.app.service('/api/devices').setOnline(authResult.user._id)
-        break
-      default:
-        break
-    }
     return this.setOnline(authResult.user._id)
   }
 
   //  On user diconnection
   onDisconnect (connection) {
     if (connection.user) {
-      switch (connection.user.type) {
-        case 'device':
-          this.app.service('/api/devices').setOffline(connection.user._id)
-          break
-        default:
-          break
-      }
       return this.setOffline(connection.user._id)
         .catch(() => {
           return false

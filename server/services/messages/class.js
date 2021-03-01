@@ -7,12 +7,9 @@ exports.Messages = class Messages extends ServiceClass {
         this.dispatch(socket, Buffer.from(msg).toString())
       })
 
-      socket.on('close', (socket) => {
+      socket.on('close', () => {
         if (socket.playerId) {
-          this.app.service('/api/players').update(socket.playerId, {
-            _id: socket.playerId,
-            online: false
-          })
+          this.app.service('/api/players').disconnect(socket.playerId)
         }
       })
     })
@@ -20,34 +17,6 @@ exports.Messages = class Messages extends ServiceClass {
 
   dispatch (socket, msg) {
     const msgs = msg.split('/')
-
-    if (socket.playerId) {
-      switch (msgs[0]) {
-        case 'network':
-          switch (msgs[1]) {
-            case 'joinLobby':
-              this.app.service('/api/lobby').update(socket.playerId, {
-                _id: socket.playerId,
-                team: msgs[2]
-              })
-              break
-            default:
-              break
-          }
-          break
-        default:
-          break
-      }
-    } else if (msgs[0] === 'player' && msgs[1] === 'sendId') {
-      socket.playerId = msgs[2]
-      //  this.app.service('/api/players').create({ _id: socket.playerId })
-      this.app.service('/api/players').create({
-        _id: socket.playerId,
-        online: true
-      })
-        .catch((err) => {
-          //  console.log(err)
-        })
-    }
+    this.app.service(`/${msgs[0]}/${msgs[1]}`)[msgs[2]](msgs.slice(3), socket)
   }
 }
