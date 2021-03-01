@@ -1,9 +1,11 @@
+const upsert = require('../../hooks/upsert')
+
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [upsert],
     update: [],
     patch: [],
     remove: []

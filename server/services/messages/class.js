@@ -12,7 +12,7 @@ exports.Messages = class Messages extends ServiceClass {
           this.app.service('/api/players').update(socket.playerId, {
             _id: socket.playerId,
             online: false
-          }, { nedb: { upsert: true } })
+          })
         }
       })
     })
@@ -41,10 +41,13 @@ exports.Messages = class Messages extends ServiceClass {
     } else if (msgs[0] === 'player' && msgs[1] === 'sendId') {
       socket.playerId = msgs[2]
       //  this.app.service('/api/players').create({ _id: socket.playerId })
-      this.app.service('/api/players').update(socket.playerId, {
+      this.app.service('/api/players').create({
         _id: socket.playerId,
         online: true
-      }, { nedb: { upsert: true } })
+      })
+        .catch((err) => {
+          //  console.log(err)
+        })
     }
   }
 }

@@ -72,6 +72,9 @@ module.exports = {
     */
     transpile: ['feathers-vuex'],
     extend (config, ctx) {
+      if (ctx.isDev) {
+        config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
+      }
     }
   }
 }
