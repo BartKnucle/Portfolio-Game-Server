@@ -1,7 +1,7 @@
 
 const createModel = require('../../models/users.model')
-const { Users } = require('./users.class')
-const hooks = require('./users.hooks')
+const { Users } = require('./class')
+const hooks = require('./hooks')
 
 module.exports = (app) => {
   const options = {

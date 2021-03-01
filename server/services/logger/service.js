@@ -1,7 +1,7 @@
 
 const createModel = require('../../models/logger.model')
-const { Logger } = require('./logger.class')
-const hooks = require('./logger.hooks')
+const { Logger } = require('./class')
+const hooks = require('./hooks')
 
 module.exports = (app) => {
   const options = {
