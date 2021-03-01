@@ -17,6 +17,6 @@ exports.Messages = class Messages extends ServiceClass {
 
   dispatch (socket, msg) {
     const msgs = msg.split('/')
-    this.app.service(`/${msgs[0]}/${msgs[1]}`)[msgs[2]](msgs.slice(3), socket)
+    this.app.service(`/${msgs[0]}/${msgs[1]}`)[msgs[2]](...msgs.slice(3), socket)
   }
 }
