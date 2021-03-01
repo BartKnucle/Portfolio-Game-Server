@@ -22,6 +22,7 @@ exports.Players = class Players extends ServiceClass {
     this.get(id)
       .then((player) => {
         if (player) {
+          this.app.service('/api/lobby').disjoin(id)
           this.patch(id, {
             online: false
           })
