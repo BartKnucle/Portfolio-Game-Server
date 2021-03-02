@@ -1,5 +1,9 @@
 <template>
   <section>
+    <v-data-table
+      :items="player().data"
+      :headers="headers"
+    />
     {{ player() }}
   </section>
 </template>
@@ -12,7 +16,23 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('player', { player: 'find', get: 'get' })
+    ...mapGetters('player', { player: 'find', get: 'get' }),
+    headers () {
+      return [
+        {
+          text: 'ID',
+          value: '_id'
+        },
+        {
+          text: 'Game ID',
+          value: 'game'
+        },
+        {
+          text: 'Online',
+          value: 'online'
+        }
+      ]
+    }
   },
   mounted () {
     this.findPlayer()

@@ -1,5 +1,9 @@
 <template>
   <section>
+    <v-data-table
+      :items="lobby().data"
+      :headers="headers"
+    />
     {{ lobby() }}
   </section>
 </template>
@@ -12,7 +16,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('lobby', { lobby: 'find', get: 'get' })
+    ...mapGetters('lobby', { lobby: 'find', get: 'get' }),
+    headers () {
+      return [
+        {
+          text: 'ID',
+          value: '_id'
+        }
+      ]
+    }
   },
   mounted () {
     this.findLobby()

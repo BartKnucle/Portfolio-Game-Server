@@ -88,3 +88,6 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# The unity game
+/client/static/game
