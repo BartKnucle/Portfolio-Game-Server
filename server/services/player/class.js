@@ -1,6 +1,6 @@
 const ServiceClass = require('../service.class')
 
-exports.Players = class Players extends ServiceClass {
+exports.Player = class Player extends ServiceClass {
   connect (id, socket) {
     socket.playerId = id
     this.create({

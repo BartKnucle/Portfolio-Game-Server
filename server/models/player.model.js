@@ -3,7 +3,7 @@ const NeDB = require('nedb')
 
 module.exports = function (app) {
   const Model = new NeDB({
-    filename: path.join(app.get('homePath'), 'db', 'players.db'),
+    filename: path.join(app.get('homePath'), 'db', 'player.db'),
     autoload: true
   })
 

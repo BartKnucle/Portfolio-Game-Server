@@ -1,6 +1,6 @@
 <template>
   <section>
-    {{ players() }}
+    {{ player() }}
   </section>
 </template>
 <script>
@@ -12,13 +12,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('players', { players: 'find', get: 'get' })
+    ...mapGetters('player', { player: 'find', get: 'get' })
   },
   mounted () {
-    this.findPlayers()
+    this.findPlayer()
   },
   methods: {
-    ...mapActions('players', { findPlayers: 'find' })
+    ...mapActions('player', { findPlayer: 'find' })
   }
 }
 </script>

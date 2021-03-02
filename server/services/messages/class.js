@@ -9,7 +9,7 @@ exports.Messages = class Messages extends ServiceClass {
 
       socket.on('close', () => {
         if (socket.playerId) {
-          this.app.service('/api/players').disconnect(socket.playerId)
+          this.app.service('/api/player').disconnect(socket.playerId)
         }
       })
     })
