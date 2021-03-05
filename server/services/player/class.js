@@ -56,4 +56,9 @@ exports.Player = class Player extends ServiceClass {
         this.app.log(err)
       })
   }
+
+  // send a message to a player
+  send (id, msg) {
+    this.app.service('/api/messages').send(id, msg)
+  }
 }
