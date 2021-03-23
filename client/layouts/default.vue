@@ -108,11 +108,6 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Player',
-          to: '/player'
-        },
-        {
-          icon: 'mdi-chart-bubble',
           title: 'Lobby',
           to: '/lobby'
         },

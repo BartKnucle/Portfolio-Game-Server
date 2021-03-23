@@ -1,6 +1,6 @@
 
-const createModel = require('../../models/game.model')
-const { Game } = require('./class')
+const createModel = require('../../models/games.model')
+const { Games } = require('./class')
 const hooks = require('./hooks')
 
 module.exports = (app) => {
@@ -10,8 +10,8 @@ module.exports = (app) => {
     multi: true
   }
 
-  app.use('/api/game', new Game(options, app))
-  const service = app.service('/api/game')
+  app.use('/api/games', new Games(options, app))
+  const service = app.service('/api/games')
 
   service.hooks(hooks)
 }

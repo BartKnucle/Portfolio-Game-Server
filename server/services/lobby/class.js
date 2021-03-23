@@ -2,13 +2,13 @@ const ServiceClass = require('../service.class')
 
 exports.Lobby = class Lobby extends ServiceClass {
   //  A player join the lobby
-  join (team, socket) {
-    this.create({
-      _id: socket.playerId,
-      team
+  join (user) {
+    return this.create({
+      _id: user._id,
+      team: user._team
     })
       .then((game) => {
-        this.match(game)
+        return this.match(game)
       })
       .catch((err) => {
         this.app.log(err, 1)
@@ -16,13 +16,10 @@ exports.Lobby = class Lobby extends ServiceClass {
   }
 
   //  A player disjoin the lobby
-  disjoin (id) {
-    this.get(id)
+  quit (userId) {
+    return this.get(userId)
       .then(() => {
-        this.remove(id)
-          .catch((err) => {
-            this.app.log(err, 2)
-          })
+        return this.remove(userId)
       })
       .catch((err) => {
         this.app.log(err, 0)
@@ -31,14 +28,14 @@ exports.Lobby = class Lobby extends ServiceClass {
 
   //  Try to match players to create a game
   match (game) {
-    this.find({
+    return this.find({
       team: game.team
     })
       .then((players) => {
         if (players.total === 4) {
-          this.app.service('/api/game').start(game.team, players.data)
+          this.app.service('/api/games').start(game.team, players.data)
           players.data.forEach((player) => {
-            this.disjoin(player._id)
+            this.quit(player._id)
           })
         }
       })

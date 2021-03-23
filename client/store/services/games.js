@@ -3,15 +3,15 @@ import feathersClient, {
   BaseModel
 } from '../apis/local'
 
-const serviceName = '/api/game'
+const serviceName = '/api/games'
 
 // Extend the base class
-class Game extends BaseModel {
+class Games extends BaseModel {
   static modelName = serviceName
 }
 
 const servicePlugin = makeServicePlugin({
-  Model: Game,
+  Model: Games,
   service: feathersClient.service(serviceName),
   serviceName
 })

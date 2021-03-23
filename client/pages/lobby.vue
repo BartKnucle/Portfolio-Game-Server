@@ -22,6 +22,10 @@ export default {
         {
           text: 'ID',
           value: '_id'
+        },
+        {
+          text: 'Team',
+          value: 'team'
         }
       ]
     }

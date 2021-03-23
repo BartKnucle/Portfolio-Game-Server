@@ -1,6 +1,6 @@
-const ServiceClass = require('../service.class')
+const ServiceClass = require('../network.service.class')
 
-exports.Game = class Game extends ServiceClass {
+exports.Games = class Games extends ServiceClass {
   start (team, players) {
     this.create(
       {
@@ -11,8 +11,13 @@ exports.Game = class Game extends ServiceClass {
     )
       .then((game) => {
         game.players.forEach((player) => {
-          this.app.service('/api/player').setGame(player._id, game._id)
-          this.broadcast(game._id, 'map/setSeed/' + game.seed)
+          this.app.service('/api/messages').send(player._id,
+            {
+              service: '/api/games',
+              state: 'newGame',
+              data: game
+            })
+          this.app.service('/api/users').setGame(player._id, game._id)
         })
       })
       .catch((err) => {
@@ -43,20 +48,6 @@ exports.Game = class Game extends ServiceClass {
               this.app.log(err, 0)
             })
         }
-      })
-      .catch((err) => {
-        this.app.log(err, 2)
-      })
-  }
-
-  // Broadcast data to all the player of a game. If playerID is submited, broadcast to the others
-  broadcast (gameId, msg, playerId) {
-    this.get(gameId)
-      .then((game) => {
-        game.players.filter(player => player._id !== playerId)
-          .forEach((player) => {
-            this.app.service('/api/player').send(player._id, msg)
-          })
       })
       .catch((err) => {
         this.app.log(err, 2)

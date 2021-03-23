@@ -1,5 +1,9 @@
 <template>
   <section>
+    <v-data-table
+      :items="users().data"
+      :headers="headers"
+    />
     {{ users() }}
   </section>
 </template>
@@ -12,7 +16,27 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('users', { users: 'find', get: 'get' })
+    ...mapGetters('users', { users: 'find', get: 'get' }),
+    headers () {
+      return [
+        {
+          text: 'ID',
+          value: '_id'
+        },
+        {
+          text: 'Username',
+          value: 'username'
+        },
+        {
+          text: 'State',
+          value: 'state'
+        },
+        {
+          text: 'Online',
+          value: 'online'
+        }
+      ]
+    }
   },
   mounted () {
     this.findUsers()

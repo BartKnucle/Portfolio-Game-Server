@@ -1,33 +1,40 @@
 const ServiceClass = require('../service.class')
+
+class Message {
+  constructor (data) {
+    this.time = new Date().getTime()
+    this.data = data
+  }
+}
+
 exports.Messages = class Messages extends ServiceClass {
   setup (app) {
     this.app = app
     this.sockets = []
 
     app.gameServer.on('connection', (socket) => {
+      socket.startedAt = new Date().getTime()
       this.sockets.push(socket)
 
-      socket.on('message', (msg) => {
-        this.dispatch(socket, Buffer.from(msg).toString())
+      socket.on('message', (data) => {
+        const msg = new Message(JSON.parse(Buffer.from(data).toString()))
+        msg.socket = socket
+
+        this.app.service(msg.data.service).receive(msg)
       })
 
       socket.on('close', () => {
-        if (socket.playerId) {
-          this.app.service('/api/player').disconnect(socket.playerId)
-          this.sockets = this.sockets.filter(s => s.playerId !== socket.playerId)
+        if (socket.userId) {
+          this.app.service('/api/users').setOffline(socket.userId)
         }
+
+        this.sockets = this.sockets.filter(s => s !== socket)
       })
     })
   }
 
-  // Dispatch the incoming messages
-  dispatch (socket, msg) {
-    const msgs = msg.split('/')
-    this.app.service(`/${msgs[0]}/${msgs[1]}`)[msgs[2]](...msgs.slice(3), socket)
-  }
-
-  // Send a message to a player ID
-  send (id, msg) {
-    this.sockets.find(socket => socket.playerId === id).send(msg)
+  send (userId, data) {
+    const message = new Message(data)
+    this.sockets.find(socket => socket.userId === userId).send(JSON.stringify(message))
   }
 }

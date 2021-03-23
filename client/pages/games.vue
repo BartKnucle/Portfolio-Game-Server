@@ -1,7 +1,7 @@
 <template>
   <section>
     <v-data-iterator
-      :items="game().data"
+      :items="games().data"
       :items-per-page.sync="itemsPerPage"
       hide-default-footer
     >
@@ -30,7 +30,7 @@
         </v-row>
       </template>
     </v-data-iterator>
-    {{ game() }}
+    {{ games() }}
   </section>
 </template>
 <script>
@@ -42,7 +42,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('game', { game: 'find', get: 'get' }),
+    ...mapGetters('games', { games: 'find', get: 'get' }),
     headers () {
       return [
         {
@@ -61,10 +61,10 @@ export default {
     }
   },
   mounted () {
-    this.findGame()
+    this.findGames()
   },
   methods: {
-    ...mapActions('game', { findGame: 'find' })
+    ...mapActions('games', { findGames: 'find' })
   }
 }
 </script>
