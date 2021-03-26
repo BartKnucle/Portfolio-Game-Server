@@ -22,9 +22,17 @@ module.exports = class ServiceClass extends Service {
   }
 
   receive (msg) {
-    this.patch(msg.data._id, msg.data)
+    delete msg.data.service
+
+    return this.patch(msg.data._id, msg.data)
       .catch(() => {
-        this.create(msg.data)
+        return this.create(msg.data)
       })
+  }
+
+  send (userId, state, data) {
+    data.service = '/api/' + this.name
+    data.state = state
+    this.app.service('/api/messages').send(userId, data)
   }
 }

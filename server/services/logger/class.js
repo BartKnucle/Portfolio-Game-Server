@@ -9,6 +9,14 @@ exports.Logger = class Logger extends ServiceClass {
 
   log (err, lvl) {
     if (lvl >= this.level) {
+      this.create({
+        err,
+        lvl
+      })
+        .catch((err) => {
+          console.log(err)
+        })
+    } else {
       console.log(err)
     }
   }

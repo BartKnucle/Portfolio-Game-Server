@@ -15,6 +15,7 @@
               <v-card-title class="subheading font-weight-bold">
                 {{ game._id }}
               </v-card-title>
+              Seed: {{ game.seed }}
 
               <v-list
                 v-for="item in game.players"

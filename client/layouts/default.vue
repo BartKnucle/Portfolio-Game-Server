@@ -120,6 +120,11 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'Logger',
           to: '/logger'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'Sandbox',
+          to: '/sandbox'
         }
       ],
       miniVariant: false,

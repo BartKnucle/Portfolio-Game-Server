@@ -12,7 +12,7 @@ exports.Users = class Users extends ServiceClass {
   }
 
   setOnline (userId) {
-    return this.patch(
+    this.patch(
       userId,
       { online: true }
     )
@@ -22,7 +22,7 @@ exports.Users = class Users extends ServiceClass {
   }
 
   setOffline (userId) {
-    return this.patch(
+    this.patch(
       userId,
       { online: false }
     )
@@ -36,16 +36,13 @@ exports.Users = class Users extends ServiceClass {
 
   //  On user connection
   onConnect (authResult) {
-    return this.setOnline(authResult.user)
+    this.setOnline(authResult.user)
   }
 
   //  On user diconnection
   onDisconnect (connection) {
     if (connection.user) {
-      return this.setOffline(connection.user)
-        .catch(() => {
-          return false
-        })
+      this.setOffline(connection.user)
     } else {
       return false
     }
@@ -53,20 +50,22 @@ exports.Users = class Users extends ServiceClass {
 
   receive (msg) {
     super.receive(msg)
-    switch (msg.data.state) {
-      case 'sendId':
-        msg.socket.userId = msg.data._id
-        this.setOnline(msg.data._id)
-        break
-      case 'joinLobby':
-        this.app.service('/api/lobby').join(msg.data)
-        break
-      case 'quitLobby':
-        this.app.service('/api/lobby').quit(msg.data)
-        break
-      default:
-        break
-    }
+      .then(() => {
+        switch (msg.data.state) {
+          case 'setId':
+            msg.socket.userId = msg.data._id
+            this.setOnline(msg.data._id)
+            break
+          case 'joinLobby':
+            this.app.service('/api/lobby').join(msg.data)
+            break
+          case 'quitLobby':
+            this.app.service('/api/lobby').quit(msg.data)
+            break
+          default:
+            break
+        }
+      })
   }
 
   setGame (id, gameId) {
