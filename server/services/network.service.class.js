@@ -30,9 +30,9 @@ module.exports = class ServiceClass extends Service {
       })
   }
 
-  send (userId, state, data) {
+  send (userId, request, data) {
     data.service = '/api/' + this.name
-    data.state = state
+    data.request = request
     this.app.service('/api/messages').send(userId, data)
   }
 }

@@ -4,7 +4,7 @@ exports.Users = class Users extends ServiceClass {
   setup (app) {
     this.patch(null, { online: false }, { query: { online: true } })
     this.patch(null, { game: '' }, { query: { game: { $ne: null } } })
-    this.patch(null, { state: '' }, { query: { state: { $ne: null } } })
+    this.patch(null, { request: '' }, { query: { request: { $ne: null } } })
     app.on('login', this.onConnect.bind(this))
     app.on('disconnect', this.onDisconnect.bind(this))
 
@@ -51,7 +51,7 @@ exports.Users = class Users extends ServiceClass {
   receive (msg) {
     super.receive(msg)
       .then(() => {
-        switch (msg.data.state) {
+        switch (msg.data.request) {
           case 'setId':
             msg.socket.userId = msg.data._id
             this.setOnline(msg.data._id)

@@ -24,12 +24,12 @@ export default {
           value: '_id'
         },
         {
-          text: 'Username',
-          value: 'username'
+          text: 'Nickname',
+          value: 'nickname'
         },
         {
-          text: 'State',
-          value: 'state'
+          text: 'Request',
+          value: 'request'
         },
         {
           text: 'Online',
