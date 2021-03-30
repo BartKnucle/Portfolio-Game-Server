@@ -1,33 +1,23 @@
-const { Service } = require('feathers-nedb')
+const ServiceClass = require('./service.class')
 
-module.exports = class ServiceClass extends Service {
-  constructor (options, app) {
-    super(options, app)
-    this.name = this.constructor.name.toLowerCase()
-  }
-
-  setup (app) {
-    this.app = app
-    this.started()
-  }
-
-  // Service started event
-  started () {
-    this.emit('started', this.name)
-  }
-
-  // Service stopped event
-  stopped () {
-    this.emit('stopped', this.name)
-  }
-
+module.exports = class NetServiceClass extends ServiceClass {
   receive (msg) {
     delete msg.data.service
+    if (msg.data.request) {
+      this[msg.data.request](msg)
+    } else {
+      this.patch(msg.data._id, msg.data)
+        .catch(() => {
+          return this.create(msg.data)
+        })
+    }
 
+    /*
     return this.patch(msg.data._id, msg.data)
       .catch(() => {
         return this.create(msg.data)
       })
+    */
   }
 
   send (userId, request, data) {

@@ -27,7 +27,7 @@ exports.Users = class Users extends ServiceClass {
       { online: false }
     )
       .then(() => {
-        return this.app.service('/api/lobby').quit(userId)
+        this.app.service('/api/lobby').quit(userId)
       })
       .catch((err) => {
         this.app.log(err)
@@ -48,6 +48,15 @@ exports.Users = class Users extends ServiceClass {
     }
   }
 
+  setId (msg) {
+    msg.socket.userId = msg.data._id
+    this.patch(msg.data._id, msg.data)
+      .catch(async () => {
+        await this.create(msg.data)
+      })
+  }
+
+  /*
   receive (msg) {
     super.receive(msg)
       .then(() => {
@@ -67,6 +76,7 @@ exports.Users = class Users extends ServiceClass {
         }
       })
   }
+  */
 
   setGame (id, gameId) {
     this.patch(id,

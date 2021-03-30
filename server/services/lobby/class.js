@@ -17,13 +17,9 @@ exports.Lobby = class Lobby extends ServiceClass {
 
   //  A player disjoin the lobby
   quit (userId) {
-    return this.get(userId)
-      .then(() => {
-        return this.remove(userId)
-      })
-      .catch((err) => {
-        this.app.log(err, 0)
-      })
+    if (this.exist(userId)) {
+      return this.remove(userId)
+    }
   }
 
   //  Try to match players to create a game
