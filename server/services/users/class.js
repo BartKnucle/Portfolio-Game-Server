@@ -11,9 +11,9 @@ exports.Users = class Users extends ServiceClass {
     super.setup(app)
   }
 
-  setOnline (userId) {
+  setOnline (user) {
     this.patch(
-      userId,
+      user._id,
       { online: true }
     )
       .catch((err) => {
@@ -51,6 +51,11 @@ exports.Users = class Users extends ServiceClass {
   setId (msg) {
     msg.socket.userId = msg.data._id
     this.patch(msg.data._id, msg.data)
+      .then((data) => {
+        console.log(data)
+        this.setOnline(data._id)
+        this.send(data._id, "setId", data)
+      })
       .catch(async () => {
         await this.create(msg.data)
       })

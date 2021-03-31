@@ -1,14 +1,12 @@
 //  const updated = require('./hooks/updated')
 
-const upsert = require('./hooks/upsert')
-
 // Global feathers Hooks
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [upsert()],
+    create: [],
     update: [],
     patch: [],
     remove: []

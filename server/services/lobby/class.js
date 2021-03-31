@@ -1,11 +1,11 @@
-const ServiceClass = require('../service.class')
+const ServiceClass = require('../network.service.class')
 
 exports.Lobby = class Lobby extends ServiceClass {
   //  A player join the lobby
-  join (user) {
+  join (msg) {
     return this.create({
-      _id: user._id,
-      team: user._team
+      _id: msg.data._id,
+      team: msg.data._team
     })
       .then((game) => {
         return this.match(game)

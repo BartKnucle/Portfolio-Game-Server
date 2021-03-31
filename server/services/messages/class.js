@@ -16,8 +16,9 @@ exports.Messages = class Messages extends ServiceClass {
       socket.startedAt = new Date().getTime()
       this.sockets.push(socket)
 
-      socket.on('message', (data) => {
+      socket.on('message', async (data) => {
         const msg = new Message(JSON.parse(Buffer.from(data).toString()))
+        await this.create(msg)
         msg.socket = socket
 
         if (this.app.service(msg.data.service)) {
