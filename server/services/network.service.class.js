@@ -6,7 +6,7 @@ module.exports = class NetServiceClass extends ServiceClass {
     if (msg.data.request) {
       this[msg.data.request](msg)
     } else {
-      msg.data.request = "Patch"
+      msg.data.request = 'Patch'
       this.patch(msg.data._id, msg.data)
         .catch((err) => {
           this.app.log(err)
