@@ -1,13 +1,14 @@
 const { hashPassword } = require('@feathersjs/authentication-local').hooks
+const setOnline = require('../../hooks/setOnline')
 
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [hashPassword('password')],
-    update: [hashPassword('password')],
-    patch: [hashPassword('password')],
+    create: [hashPassword('password'), setOnline()],
+    update: [hashPassword('password'), setOnline()],
+    patch: [hashPassword('password'), setOnline()],
     remove: []
   },
 

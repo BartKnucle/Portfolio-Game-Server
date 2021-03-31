@@ -16,8 +16,8 @@ exports.Lobby = class Lobby extends ServiceClass {
   }
 
   //  A player disjoin the lobby
-  quit (userId) {
-    if (this.exist(userId)) {
+  async quit (userId) {
+    if (await this.exist(userId)) {
       return this.remove(userId)
     }
   }

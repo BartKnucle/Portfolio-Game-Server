@@ -11,16 +11,6 @@ exports.Users = class Users extends ServiceClass {
     super.setup(app)
   }
 
-  setOnline (user) {
-    this.patch(
-      user._id,
-      { online: true }
-    )
-      .catch((err) => {
-        this.app.log(err)
-      })
-  }
-
   setOffline (userId) {
     this.patch(
       userId,
@@ -36,13 +26,13 @@ exports.Users = class Users extends ServiceClass {
 
   //  On user connection
   onConnect (authResult) {
-    this.setOnline(authResult.user)
+    //  this.setOnline(authResult.user)
   }
 
   //  On user diconnection
   onDisconnect (connection) {
     if (connection.user) {
-      this.setOffline(connection.user)
+      this.setOffline(connection.user._id)
     } else {
       return false
     }
@@ -52,9 +42,8 @@ exports.Users = class Users extends ServiceClass {
     msg.socket.userId = msg.data._id
     this.patch(msg.data._id, msg.data)
       .then((data) => {
-        console.log(data)
-        this.setOnline(data._id)
-        this.send(data._id, "setId", data)
+        //  this.setOnline(data)
+        this.send(data._id, 'setId', data)
       })
       .catch(async () => {
         await this.create(msg.data)
