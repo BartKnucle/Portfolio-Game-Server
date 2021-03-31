@@ -43,7 +43,7 @@ exports.Users = class Users extends ServiceClass {
     this.patch(msg.data._id, msg.data)
       .then((data) => {
         //  this.setOnline(data)
-        this.send(data._id, 'setId', data)
+        this.send(data._id, 'getUserInfos', data)
       })
       .catch(async () => {
         await this.create(msg.data)
