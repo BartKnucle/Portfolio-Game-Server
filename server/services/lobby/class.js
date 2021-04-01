@@ -5,13 +5,18 @@ exports.Lobby = class Lobby extends ServiceClass {
   join (msg) {
     return this.create({
       _id: msg.data._id,
-      team: msg.data._team
+      team: msg.data.team
     })
       .then((game) => {
         return this.match(game)
       })
-      .catch((err) => {
-        this.app.log(err, 1)
+      .catch(() => {
+        return this.patch(
+          msg.data._id,
+          {
+            _id: msg.data._id,
+            team: msg.data.team
+          })
       })
   }
 
