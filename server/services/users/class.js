@@ -40,37 +40,15 @@ exports.Users = class Users extends ServiceClass {
 
   setId (msg) {
     msg.socket.userId = msg.data._id
-    this.patch(msg.data._id, msg.data)
-      .then((data) => {
-        //  this.setOnline(data)
-        this.send(data._id, 'getUserInfos', data)
-      })
-      .catch(async () => {
-        await this.create(msg.data)
-      })
-  }
-
-  /*
-  receive (msg) {
-    super.receive(msg)
-      .then(() => {
-        switch (msg.data.request) {
-          case 'setId':
-            msg.socket.userId = msg.data._id
-            this.setOnline(msg.data._id)
-            break
-          case 'joinLobby':
-            this.app.service('/api/lobby').join(msg.data)
-            break
-          case 'quitLobby':
-            this.app.service('/api/lobby').quit(msg.data)
-            break
-          default:
-            break
+    this.exist(msg.data._id)
+      .then((exist) => {
+        if (exist) {
+          this.patch(msg.data._id, msg.data)
+        } else {
+          this.create(msg.data)
         }
       })
   }
-  */
 
   setGame (id, gameId) {
     this.patch(id,

@@ -5,6 +5,7 @@ const authentication = require('./authentication/service')
 const messages = require('./messages/service')
 const lobby = require('./lobby/service')
 const games = require('./games/service')
+const players = require('./players/service')
 
 module.exports = function (app) {
   //  app.configure(setup)
@@ -14,4 +15,5 @@ module.exports = function (app) {
   app.configure(messages)
   app.configure(lobby)
   app.configure(games)
+  app.configure(players)
 }
