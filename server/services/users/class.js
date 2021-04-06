@@ -45,6 +45,7 @@ exports.Users = class Users extends ServiceClass {
         if (exist) {
           this.patch(msg.data._id, msg.data)
         } else {
+          msg.data.nickname = ''
           this.create(msg.data)
         }
       })
