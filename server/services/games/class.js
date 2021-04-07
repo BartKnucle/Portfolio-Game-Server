@@ -23,31 +23,26 @@ exports.Games = class Games extends ServiceClass {
   }
 
   quit (id, playerId) {
-    this.get(id)
-      .then((game) => {
-        const players = game.players.filter(player => player._id !== playerId)
-        if (players.length > 1) {
-          this.patch(id, {
-            players
-          })
+    this.exist(id)
+      .then((result) => {
+        if (result === true) {
+          this.get(id)
             .then((game) => {
-              if (game.players.length < 2) {
-                this.destroy(game)
-              }
+              game.players.forEach((player) => {
+                this.app.service('/api/players').quit(player._id)
+                this.app.service('/api/users').unsetGame(player._id)
+                if (player._id !== playerId) {
+                  this.send(player._id, 'quit', { _id: id })
+                }
+              })
             })
-            .catch((err) => {
-              this.app.log(err, true)
+            .then(() => {
+              this.remove(id)
             })
-        } else {
-          this.app.service('/api/player').setGame(players[0]._id, '')
-          this.remove(game._id)
             .catch((err) => {
               this.app.log(err, true)
             })
         }
-      })
-      .catch((err) => {
-        this.app.log(err, true)
       })
   }
 }

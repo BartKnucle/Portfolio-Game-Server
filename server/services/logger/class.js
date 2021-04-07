@@ -7,10 +7,19 @@ exports.Logger = class Logger extends ServiceClass {
   }
 
   log (log) {
-    log.data.time = log.time
-    log.data.user = log.socket.userId
-    if (log.data.type === 'Error' || this.app.get('env') === 'development') {
-      this.create(log.data)
+    log.time = new Date().getTime()
+    if (log.socket) {
+      log.user = log.socket.userId
+    }
+
+    if (log.data) {
+      log.type = log.data.type
+    } else {
+      log.type = 'Log'
+    }
+
+    if (log.type === 'Error' || this.app.get('env') === 'development') {
+      this.create(log)
         .catch((err) => {
           console.log(err)
         })

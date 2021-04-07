@@ -7,4 +7,14 @@ exports.Players = class Players extends ServiceClass {
       msg.data
     )
   }
+
+  //  A player disjoin the lobby
+  quit (playerId) {
+    this.exist(playerId)
+      .then((result) => {
+        if (result === true) {
+          this.remove(playerId)
+        }
+      })
+  }
 }

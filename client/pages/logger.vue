@@ -4,6 +4,7 @@
       :items="logger().data"
       :headers="headers"
     />
+    {{ logger().data }}
   </section>
 </template>
 <script>
@@ -36,11 +37,11 @@ export default {
         },
         {
           text: 'Message',
-          value: 'message'
+          value: 'data.message'
         },
         {
           text: 'Stacktrace',
-          value: 'stackTrace'
+          value: 'data.stackTrace'
         }
       ]
     }

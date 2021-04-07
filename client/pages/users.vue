@@ -34,6 +34,10 @@ export default {
         {
           text: 'Online',
           value: 'online'
+        },
+        {
+          text: 'Game',
+          value: 'game'
         }
       ]
     }

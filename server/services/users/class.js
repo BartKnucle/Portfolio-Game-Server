@@ -16,8 +16,11 @@ exports.Users = class Users extends ServiceClass {
       userId,
       { online: false }
     )
-      .then(() => {
+      .then((result) => {
         this.app.service('/api/lobby').quit(userId)
+        if (result.game !== undefined) {
+          this.app.service('/api/games').quit(result.game, userId)
+        }
       })
       .catch((err) => {
         this.app.log(err)
@@ -26,7 +29,6 @@ exports.Users = class Users extends ServiceClass {
 
   //  On user connection
   onConnect (authResult) {
-    this.app.log(authResult.user)
     //  this.setOnline(authResult.user)
   }
 
@@ -57,6 +59,17 @@ exports.Users = class Users extends ServiceClass {
       {
         _id: id,
         game: gameId
+      })
+      .catch((err) => {
+        this.app.log(err)
+      })
+  }
+
+  unsetGame (id) {
+    this.patch(id,
+      {
+        _id: id,
+        game: ''
       })
       .catch((err) => {
         this.app.log(err)

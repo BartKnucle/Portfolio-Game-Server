@@ -21,10 +21,13 @@ exports.Lobby = class Lobby extends ServiceClass {
   }
 
   //  A player disjoin the lobby
-  async quit (userId) {
-    if (await this.exist(userId)) {
-      return this.remove(userId)
-    }
+  quit (userId) {
+    this.exist(userId)
+      .then((result) => {
+        if (result === true) {
+          this.remove(userId)
+        }
+      })
   }
 
   //  Try to match players to create a game
