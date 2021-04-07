@@ -1,6 +1,9 @@
 <template>
   <section>
-    {{ logger() }}
+    <v-data-table
+      :items="logger().data"
+      :headers="headers"
+    />
   </section>
 </template>
 <script>
@@ -12,13 +15,41 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('logger', { logger: 'find', get: 'get' })
+    ...mapGetters('logger', { logger: 'find', get: 'get' }),
+    headers () {
+      return [
+        {
+          text: 'ID',
+          value: '_id'
+        },
+        {
+          text: 'Type',
+          value: 'type'
+        },
+        {
+          text: 'Time',
+          value: 'time'
+        },
+        {
+          text: 'User',
+          value: 'user'
+        },
+        {
+          text: 'Message',
+          value: 'message'
+        },
+        {
+          text: 'Stacktrace',
+          value: 'stackTrace'
+        }
+      ]
+    }
   },
   mounted () {
     this.findLogger()
   },
   methods: {
-    ...mapActions('logger', { findLogger: 'find', removeLogger: 'remove' })
+    ...mapActions('logger', { findLogger: 'find' })
   }
 }
 </script>

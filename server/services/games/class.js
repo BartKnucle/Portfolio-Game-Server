@@ -18,7 +18,7 @@ exports.Games = class Games extends ServiceClass {
         })
       })
       .catch((err) => {
-        this.app.log(err, 2)
+        this.app.log(err, true)
       })
   }
 
@@ -36,18 +36,18 @@ exports.Games = class Games extends ServiceClass {
               }
             })
             .catch((err) => {
-              this.app.log(err, 2)
+              this.app.log(err, true)
             })
         } else {
           this.app.service('/api/player').setGame(players[0]._id, '')
           this.remove(game._id)
             .catch((err) => {
-              this.app.log(err, 0)
+              this.app.log(err, true)
             })
         }
       })
       .catch((err) => {
-        this.app.log(err, 2)
+        this.app.log(err, true)
       })
   }
 }

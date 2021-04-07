@@ -41,7 +41,7 @@ exports.Lobby = class Lobby extends ServiceClass {
         }
       })
       .catch((err) => {
-        this.app.log(err, 2)
+        this.app.log(err, true)
       })
   }
 }

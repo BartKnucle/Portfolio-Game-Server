@@ -26,6 +26,7 @@ exports.Users = class Users extends ServiceClass {
 
   //  On user connection
   onConnect (authResult) {
+    this.app.log(authResult.user)
     //  this.setOnline(authResult.user)
   }
 

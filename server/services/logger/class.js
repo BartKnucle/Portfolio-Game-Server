@@ -1,23 +1,21 @@
-const ServiceClass = require('../service.class')
+const ServiceClass = require('../network.service.class')
 
 exports.Logger = class Logger extends ServiceClass {
   setup (app) {
-    this.level = 2
     app.log = this.log.bind(this)
     super.setup(app)
   }
 
-  log (err, lvl) {
-    if (lvl >= this.level) {
-      this.create({
-        err,
-        lvl
-      })
+  log (log) {
+    log.data.time = log.time
+    log.data.user = log.socket.userId
+    if (log.data.type === 'Error' || this.app.get('env') === 'development') {
+      this.create(log.data)
         .catch((err) => {
           console.log(err)
         })
     } else {
-      console.log(err)
+      console.log(log.message)
     }
   }
 }

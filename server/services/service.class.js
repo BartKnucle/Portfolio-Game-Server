@@ -36,7 +36,7 @@ module.exports = class ServiceClass extends Service {
         }
       })
       .catch((err) => {
-        this.app.log(err, 2)
+        this.app.log(err, true)
       })
   }
 }
