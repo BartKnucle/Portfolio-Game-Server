@@ -45,4 +45,18 @@ exports.Games = class Games extends ServiceClass {
         }
       })
   }
+
+  getPlayers (gameId) {
+    return this.exist(gameId)
+      .then((exist) => {
+        if (exist) {
+          return this.get(gameId)
+            .then((game) => {
+              return game.players
+            })
+        } else {
+          return []
+        }
+      })
+  }
 }
