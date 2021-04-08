@@ -36,8 +36,8 @@ export default {
           value: 'x'
         },
         {
-          text: 'y',
-          value: 'y'
+          text: 'z',
+          value: 'z'
         }
       ]
     }
