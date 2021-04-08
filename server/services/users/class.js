@@ -47,6 +47,9 @@ exports.Users = class Users extends ServiceClass {
       .then((exist) => {
         if (exist) {
           this.patch(msg.data._id, msg.data)
+            .then((data) => {
+              this.send(msg.data._id, 'patch', data)
+            })
         } else {
           msg.data.nickname = ''
           this.create(msg.data)

@@ -26,6 +26,18 @@ export default {
         {
           text: 'Game',
           value: 'game'
+        },
+        {
+          text: 'Score',
+          value: 'score'
+        },
+        {
+          text: 'x',
+          value: 'x'
+        },
+        {
+          text: 'y',
+          value: 'y'
         }
       ]
     }

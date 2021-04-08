@@ -4,10 +4,10 @@ module.exports = class NetServiceClass extends ServiceClass {
   patch (id, data, params) {
     data.request = 'patch'
     return super.patch(id, data, params)
-      .then((data) => {
+    /*  .then((data) => {
         this.send(id, 'patch', data)
         return data
-      })
+      }) */
   }
 
   receive (msg) {
@@ -22,9 +22,14 @@ module.exports = class NetServiceClass extends ServiceClass {
     }
   }
 
-  send (userId, request, data) {
-    data.service = '/api/' + this.name
+  send (userId, request, data, service) {
+    if (service === undefined) {
+      data.service = '/api/' + this.name
+    } else {
+      data.service = service
+    }
     data.request = request
+
     this.app.service('/api/messages').send(userId, data)
   }
 }
