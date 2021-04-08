@@ -2,7 +2,7 @@ const ServiceClass = require('../network.service.class')
 
 exports.Players = class Players extends ServiceClass {
   patch (id, data, params) {
-    super.patch(id, data, params)
+    return super.patch(id, data, params)
       .then((data) => {
         this.sendUpdate(data)
       })
