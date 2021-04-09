@@ -12,8 +12,6 @@ exports.Games = class Games extends ServiceClass {
       .then((game) => {
         game.players.forEach((player) => {
           player.game = game._id
-          player.x = 0
-          player.z = 0
           player.score = 0
           this.app.service('/api/players').create(player)
           this.app.service('/api/users').setGame(player._id, game._id)
